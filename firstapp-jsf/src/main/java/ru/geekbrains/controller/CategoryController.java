@@ -3,58 +3,37 @@ package ru.geekbrains.controller;
 import ru.geekbrains.persist.Category;
 import ru.geekbrains.persist.CategoryRepository;
 
-import javax.enterprise.context.SessionScoped;
-
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import java.io.Serializable;
-
-import java.sql.SQLException;
-
-import java.util.List;
-
-@SessionScoped
+@RequestScoped
 @Named
-public class CategoryController implements Serializable {
+public class CategoryController implements Converter<Category> {
 
     @Inject
     private CategoryRepository categoryRepository;
 
-    private Category category;
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public List<Category> getAllCategory() throws SQLException {
-        return categoryRepository.findALl();
-    }
-
-    public String editCategory(Category category) {
-        this.category = category;
-        return "/category.xhtml?faces-redirect=true";
-    }
-
-    public void deleteCategory(Category category) throws SQLException {
-        categoryRepository.delete(category.getId());
-    }
-
-    public String createCategory() {
-        this.category = new Category();
-        return "/category.xhtml?faces-redirect=true";
-    }
-
-    public String saveCategory() throws SQLException {
-        if (category.getId() != null) {
-            categoryRepository.update(category);
-        } else {
-            categoryRepository.insert(category);
+    @Override
+    public Category getAsObject(FacesContext context, UIComponent component, String value) {
+        if (value == null || value.isEmpty()) {
+            return null;
         }
-        return "/categories.xhtml?faces-redirect=true";
+
+        return categoryRepository.findById(Long.parseLong(value))
+                .orElseThrow(() -> new ConverterException(new FacesMessage(String.format("%s is not correct id", value))));
+    }
+
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Category value) {
+        if (value == null) {
+            return "";
+        }
+        return String.valueOf(value.getId());
     }
 }

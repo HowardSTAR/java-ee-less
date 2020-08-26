@@ -1,7 +1,6 @@
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/persist/Product.java
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/controller/ProductController.java
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/persist/Category.java
-/Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/listener/AppBootstrapListner.java
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/persist/CategoryRepository.java
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/controller/CategoryController.java
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/persist/ProductRepository.java
