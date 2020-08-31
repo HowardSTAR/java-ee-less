@@ -3,4 +3,5 @@
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/persist/Category.java
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/persist/CategoryRepository.java
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/controller/CategoryController.java
+/Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/controller/CategoryConvertation.java
 /Users/strangeman/IdeaProjects/java-ee-less/firstapp-jsf/src/main/java/ru/geekbrains/persist/ProductRepository.java

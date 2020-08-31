@@ -3,25 +3,13 @@ package ru.geekbrains.persist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
-
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-
-import javax.inject.Inject;
 import javax.inject.Named;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.ServletContext;
-import javax.transaction.NotSupportedException;
-import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
-
-import java.sql.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,9 +58,9 @@ public class CategoryRepository {
                 .getResultList();
     }
 
-    public Optional<Category> findByName(String name) {
-        Category category = em.createQuery("from Category c where c.name = :name", Category.class)
-                .setParameter("name", name)
+    public Optional<Category> findByName(String title) {
+        Category category = em.createQuery("from Category c where c.title = :title", Category.class)
+                .setParameter("title", title)
                 .getSingleResult();
         if (category != null) {
             return Optional.of(category);

@@ -1,6 +1,7 @@
 <html lang="en"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
@@ -12,13 +13,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>Shopping application</title>
+    <title>New category</title>
 </h:head>
 
 <h:body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Products</a>
+        <a class="navbar-brand" href="#">Category</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,48 +40,15 @@
 
     <div class="container">
         <div class="row py-2">
-            <h:form id="productsForm">
-                <div class="col-12">
-                    <h:commandButton value="Add product" styleClass="btn btn-primary"
-                                     action="#{productController.createProduct()}"/>
-                </div>
-
-                <div class="col-12">
-                    <h:dataTable value="#{productController.allProducts}"
-                                 styleClass="table table-bordered my-2"
-                                 var="prod">
-                        <h:column>
-                            <f:facet name="header">Id</f:facet>
-                            #{prod.id}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Name</f:facet>
-                            #{prod.name}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Description</f:facet>
-                            #{prod.description}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Price</f:facet>
-                            #{prod.price}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Category</f:facet>
-                            #{prod.category.title}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Action</f:facet>
-                            <h:commandButton value="Edit" styleClass="btn btn-success"
-                                             action="#{productController.editProduct(prod)}"/>
-                            <h:commandButton value="Delete" styleClass="btn btn-danger"
-                                             action="#{productController.deleteProduct(prod)}">
-                                <f:ajax event="click" render="productsForm"/>
-                            </h:commandButton>
-                        </h:column>
-                    </h:dataTable>
-                </div>
-            </h:form>
+            <div class="col-12">
+                <h:form id="categoryForm">
+                    <div class="form-group">
+                        <h:outputLabel value="Title"/>
+                        <h:inputText styleClass="form-control" id="title" value="#{categoryController.category.title}" placeholder="Enter title"/>
+                    </div>
+                    <h:commandButton value="Submit" styleClass="btn btn-primary" action="#{categoryController.saveCategory()}"/>
+                </h:form>
+            </div>
         </div>
     </div>
 
@@ -95,6 +63,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+
 </h:body>
 
 </html>

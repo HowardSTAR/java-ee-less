@@ -3,37 +3,53 @@ package ru.geekbrains.controller;
 import ru.geekbrains.persist.Category;
 import ru.geekbrains.persist.CategoryRepository;
 
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
+import java.util.List;
 
-@RequestScoped
+@SessionScoped
 @Named
-public class CategoryController implements Converter<Category> {
+public class CategoryController implements Serializable {
 
     @Inject
     private CategoryRepository categoryRepository;
 
-    @Override
-    public Category getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value == null || value.isEmpty()) {
-            return null;
-        }
+    private Category category;
 
-        return categoryRepository.findById(Long.parseLong(value))
-                .orElseThrow(() -> new ConverterException(new FacesMessage(String.format("%s is not correct id", value))));
+    public Category getCategory() {
+        return category;
     }
 
-    @Override
-    public String getAsString(FacesContext context, UIComponent component, Category value) {
-        if (value == null) {
-            return "";
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Category> getAllCategory() {
+        return categoryRepository.findALl();
+    }
+
+    public String editCategory(Category category) {
+        this.category = category;
+        return "/category.xhtml?faces-redirect=true";
+    }
+
+    public void deleteCategory(Category category) {
+        categoryRepository.delete(category.getId());
+    }
+
+    public String createCategory() {
+        this.category = new Category();
+        return "/category.xhtml?faces-redirect=true";
+    }
+
+    public String saveCategory() {
+        if (category.getId() != null) {
+            categoryRepository.update(category);
+        } else {
+            categoryRepository.insert(category);
         }
-        return String.valueOf(value.getId());
+        return "/categories.xhtml?faces-redirect=true";
     }
 }

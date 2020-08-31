@@ -50,6 +50,7 @@ public class ProductController implements Serializable {
     }
 
     public String saveProduct() {
+        System.out.println("YES");
         if (product.getId() != null) {
             productRepository.update(product);
         } else {

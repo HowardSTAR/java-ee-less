@@ -4,24 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
-
 import java.math.BigDecimal;
-
-import java.sql.*;
-
 import java.util.List;
 import java.util.Optional;
 
