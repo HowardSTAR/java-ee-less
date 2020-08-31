@@ -19,7 +19,7 @@ import java.util.Arrays;
     "/*"            ->     !!antipattern!!
  */
 
-@WebServlet(name = "FirstHttpServlet", urlPatterns = "/first-http-servlet")
+@WebServlet(name = "FirstHttpServlet", urlPatterns = "/first-http-servlet/*")
 public class FirstHttpServlet extends HttpServlet {
 
     @Override
