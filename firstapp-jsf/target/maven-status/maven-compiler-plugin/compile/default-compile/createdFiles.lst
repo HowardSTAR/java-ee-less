@@ -1,6 +1,6 @@
-ru/geekbrains/listener/AppBootstrapListner.class
 ru/geekbrains/persist/Category.class
 ru/geekbrains/controller/CategoryController.class
+ru/geekbrains/controller/CategoryConvertation.class
 ru/geekbrains/persist/CategoryRepository.class
 ru/geekbrains/persist/Product.class
 ru/geekbrains/persist/ProductRepository.class

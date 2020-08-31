@@ -3,18 +3,13 @@ package ru.geekbrains.persist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
-
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-
-import javax.inject.Inject;
 import javax.inject.Named;
-
-import javax.servlet.ServletContext;
-
-import java.sql.*;
-
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import javax.transaction.UserTransaction;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,83 +18,54 @@ import java.util.Optional;
 public class CategoryRepository {
     private static final Logger logger = LoggerFactory.getLogger(CategoryRepository.class);
 
-    @Inject
-    private ServletContext context;
+    @PersistenceContext(unitName = "ds")
+    private EntityManager em;
 
-    private Connection conn;
+    @Resource
+    private UserTransaction ut;
 
     public CategoryRepository() {
     }
 
-    @PostConstruct
-    public void init() throws SQLException {
-        conn = (Connection) context.getAttribute("connection");
-        createTableIfNotExists(conn);
+    @Transactional
+    public void insert(Category category) {
+        em.persist(category);
+    }
 
-        if (this.findALl().isEmpty()) {
-            logger.info("No category in DB. Initializing");
+    @Transactional
+    public void update(Category category) {
+        em.merge(category);
+    }
 
-            this.insert(new Category(-1L, "Notenook"));
-            this.insert(new Category(-1L, "Pad"));
-            this.insert(new Category(-1L, "Phone"));
+    @Transactional
+    public void delete(long id) {
+        Category category = em.find(Category.class, id);
+        if (category != null) {
+            em.remove(category);
         }
     }
 
-    public void insert(Category category) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "insert into categories(title) values (?);")) {
-            stmt.setString(1, category.getTitle());
-            stmt.execute();
-        }
-    }
-
-    public void update(Category category) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "update categories set title = ? where id = ?;")) {
-            stmt.setString(1, category.getTitle());
-            stmt.setLong(2, category.getId());
-            stmt.execute();
-        }
-    }
-
-    public void delete(long id) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "delete from categories where id = ?;")) {
-            stmt.setLong(1, id);
-            stmt.execute();
-        }
-    }
-
-    public Optional<Category> findById(long id) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "select id, title from categories where id = ?")) {
-            stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return Optional.of(new Category(rs.getLong(1), rs.getString(2)));
-            }
+    public Optional<Category> findById(long id) {
+        Category category = em.find(Category.class, id);
+        if (category != null) {
+            return Optional.of(category);
         }
         return Optional.empty();
     }
 
-    public List<Category> findALl() throws SQLException {
-        List<Category> res = new ArrayList<>();
-        try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery("select id, title from categories");
-
-            while (rs.next()) {
-                res.add(new Category(rs.getLong(1), rs.getString(2)));
-            }
-        }
-        return res;
+    public List<Category> findALl() {
+        return em.createQuery("from Category", Category.class)
+                .getResultList();
     }
 
-    private void createTableIfNotExists(Connection conn) throws SQLException {
-        try (Statement stmt = conn.createStatement()) {
-            stmt.execute("create table if not exists categories (\n" +
-                    " id int auto_increment primary key, \n" +
-                    " title varchar(255));");
+    public Optional<Category> findByName(String title) {
+        Category category = em.createQuery("from Category c where c.title = :title", Category.class)
+                .setParameter("title", title)
+                .getSingleResult();
+        if (category != null) {
+            return Optional.of(category);
+        } else {
+            return Optional.empty();
         }
     }
 

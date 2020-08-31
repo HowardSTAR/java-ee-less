@@ -4,14 +4,9 @@ import ru.geekbrains.persist.Category;
 import ru.geekbrains.persist.CategoryRepository;
 
 import javax.enterprise.context.SessionScoped;
-
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import java.io.Serializable;
-
-import java.sql.SQLException;
-
 import java.util.List;
 
 @SessionScoped
@@ -31,7 +26,7 @@ public class CategoryController implements Serializable {
         this.category = category;
     }
 
-    public List<Category> getAllCategory() throws SQLException {
+    public List<Category> getAllCategory() {
         return categoryRepository.findALl();
     }
 
@@ -40,7 +35,7 @@ public class CategoryController implements Serializable {
         return "/category.xhtml?faces-redirect=true";
     }
 
-    public void deleteCategory(Category category) throws SQLException {
+    public void deleteCategory(Category category) {
         categoryRepository.delete(category.getId());
     }
 
@@ -49,7 +44,7 @@ public class CategoryController implements Serializable {
         return "/category.xhtml?faces-redirect=true";
     }
 
-    public String saveCategory() throws SQLException {
+    public String saveCategory() {
         if (category.getId() != null) {
             categoryRepository.update(category);
         } else {
