@@ -40,3 +40,11 @@ r
 Bfirstapp/src/main/java/ru/geekbrains/ProductControllerServlet.java,1/b/1b85308ab676fe37cc4b4a394ebaeae7e2fca59e
 \
 ,firstapp/src/main/webapp/WEB-INF/product.jsp,1/1/1102a36db5d11e3de874288e501c73013d9cd5a4
+z
+Jfirstapp-jsf/src/main/java/ru/geekbrains/listener/AppBootstrapListner.java,2/6/266599659ec25f2682a337fcecb6baf9ff9db750
+D
+firstapp-jsf/pom.xml,2/0/203d40f5caa1877a338880976cc71c9eae829254
+\
+,firstapp-jsf/src/main/webapp/WEB-INF/web.xml,c/9/c9ef32583f05399a97098bbc16eefaf268b5e75c
+w
+Gfirstapp-jsf/src/main/java/ru/geekbrains/persist/ProductRepository.java,9/3/93c9a41c4f70a4fa542bd2173fd7e3598c17c0b3
